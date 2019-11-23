@@ -2,6 +2,18 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan'); // helps to see route path in console. Works as middleware
 const postRoutes = require('./routes/post');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+dotenv.config();
+
+// connect to mongodb db
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .then(() => console.log('DB Connected'));
+
+mongoose.connection.on('error', err => {
+  console.log(`DB connection error: ${err.message}`);
+});
 
 // middleware
 app.use(morgan('dev'));
