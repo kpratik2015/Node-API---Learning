@@ -1,18 +1,12 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan'); // helps to see route path in console. Works as middleware
-const { getPosts } = require('./routes/post');
-
-const myOwnMiddleware = (req, res, next) => {
-  console.log('middleware applied !!');
-  next(); // continue to next phase
-};
+const postRoutes = require('./routes/post');
 
 // middleware
 app.use(morgan('dev'));
-app.use(myOwnMiddleware);
 
-app.get('/', getPosts);
+app.use('/', postRoutes); // so postRoutes works like a middleware
 
 const port = 8080;
 
